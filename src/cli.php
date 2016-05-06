@@ -35,6 +35,24 @@ class Cli
 		'light_gray'	=> '47',
 	);
 	
+	public static function options()
+	{
+		static $args = null;
+		if ($args === null) {
+			$args = [];
+			for ($i = 1; $i < $_SERVER['argc']; $i++)
+			{
+				$arg = explode('=', $_SERVER['argv'][$i]);
+				$args[$i] = $arg[0];
+				if (count($arg) > 1 || strncmp($arg[0], '-', 1) === 0)
+				{
+					$args[ltrim($arg[0], '-')] = isset($arg[1]) ? $arg[1] : true;
+				}
+			}
+		}
+		return $args;
+	}
+	
 	/*
 	 * Prompts the user using $message and returns the value. On the first prompt it'll also display a message indicating how to provide an empty value.
 	 * 
