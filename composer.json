@@ -1,0 +1,39 @@
+{
+    "name": "wordfence/wpkit",
+    "description": "",
+    "license": "TBD",
+    "keywords": [],
+    "authors": [
+        {
+            "name": "Panagiotis Vagenas",
+            "email": "pan.vagenas@gmail.com",
+            "homepage": "https://gr.linkedin.com/in/panvagenas",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "rmccue/requests": "1.*",
+    },
+    "require-dev": {},
+    "config": {
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "WordFence\\WpKit\\": "src/"
+        },
+        "files": []
+    },
+    "autoload-dev": {
+        "psr-4": {}
+    },
+    "archive": {
+        "exclude": [
+            "/docs",
+            "/tests"
+        ]
+    }
+}
