@@ -1,0 +1,12 @@
+{
+  "user.subscriber": {"log": "user_subscriber", "pwd": "1234"},
+  "user.contributor": {"log": "user_contributor", "pwd": "1234"},
+  "user.author": {"log": "user_author", "pwd": "1234"},
+  "user.editor": {"log": "user_editor", "pwd": "1234"},
+  "user.administrator": {"log": "user_administrator", "pwd": "1234"},
+
+  "url.base": "http://testhost.dev",
+  "url.login": "http://testhost.dev/wp-login.php",
+  "url.ajax": "http://testhost.dev/wp-admin/admin-ajax.php",
+  "url.admin": "http://testhost.dev/wp-admin/admin.php"
+}
