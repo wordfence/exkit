@@ -30,12 +30,7 @@ class WPAuthentication
 				'rememberme' => 'forever',
 				'wp-submit'  => 'Log+In',
 			];
-		$baseURL = \Wordfence\WPKit\Config::get('url.base', null, false);
-		$defaultLoginURL = null;
-		if ($baseURL !== null) {
-			$defaultLoginURL = trim($baseURL, '/') . '/wp-login.php';
-		}
-		$loginURL = \Wordfence\WPKit\Config::get('url.login', $defaultLoginURL, true, 'Login URL');
+		$loginURL = \Wordfence\WPKit\Endpoint::loginURL();
 		
 		$r = $session->post($loginURL, [], $loginPostData);
 		if ($r->url == $loginURL) {
