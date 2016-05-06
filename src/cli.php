@@ -46,7 +46,7 @@ class Cli
 		static $firstPrompt = true;
 		if ($firstPrompt) {
 			$firstPrompt = false;
-			echo "If you enter '.', the field will be left blank.\n";
+			echo "If you enter '.', the field will be left blank." . PHP_EOL;
 		}
 		
 		$prompt = $message;
@@ -89,6 +89,6 @@ class Cli
 			$string .= "\033[0m";
 		}
 		
-		fwrite(STDOUT, $string);
+		fwrite(STDOUT, $string . PHP_EOL);
 	}
 }
