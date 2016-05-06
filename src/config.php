@@ -37,10 +37,14 @@ class Config
 		
 		if ($shouldPrompt) {
 			$value = \Cli::prompt($promptMessage === null ? $key : $promptMessage, $defaultValue);
-			self::$_cachedConfig[$key] = $value;
-			return;
+			self::set($key, $value);
+			return $value;
 		}
 		
 		return $defaultValue;
+	}
+	
+	public static function set($key, $value) {
+		self::$_cachedConfig[$key] = $value;
 	}
 }
