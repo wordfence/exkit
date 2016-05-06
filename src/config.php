@@ -36,7 +36,7 @@ class Config
 		}
 		
 		if ($shouldPrompt) {
-			$value = \Cli::prompt($promptMessage === null ? $key : $promptMessage, $defaultValue);
+			$value = \Wordfence\WPKit\Cli::prompt($promptMessage === null ? $key : $promptMessage, $defaultValue);
 			self::set($key, $value);
 			return $value;
 		}
