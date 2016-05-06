@@ -2,6 +2,13 @@
 
 namespace Wordfence\WPKit;
 
+/*
+ * Responsible for all configuration and value caching. For values that need to be customized for the
+ * environment being used, this class is responsible for getting and storing them.
+ * 
+ * If the command-line argument "--config=/path/to/config.json" is used, the configuration in that JSON file will 
+ * be automatically loaded.
+ */
 class Config
 {
 	/*
@@ -21,6 +28,17 @@ class Config
 		}
 	}
 	
+	private static function _autoloadConfigurationFile() {
+		static $autoloaded = false;
+		if (!$autoloaded) {
+			$options = \Wordfence\WPKit\Cli::options();
+			if (isset($options['config'])) {
+				self::useConfigurationFile($options['config']);
+			}
+			$autoloaded = true;
+		}
+	}
+	
 	/*
 	 * Gets the configuration value for $key, optionally prompting and/or returning a default value.
 	 * 
@@ -31,6 +49,7 @@ class Config
 	 * @return mixed The value;
 	 */
 	public static function get($key, $defaultValue = null, $shouldPrompt = true, $promptMessage = null) {
+		self::_autoloadConfigurationFile();
 		if (isset(self::$_cachedConfig[$key])) {
 			return self::$_cachedConfig[$key];
 		}
@@ -51,6 +70,7 @@ class Config
 	 * @param mixed $value
 	 */
 	public static function set($key, $value) {
+		self::_autoloadConfigurationFile();
 		self::$_cachedConfig[$key] = $value;
 	}
 }
