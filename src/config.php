@@ -44,6 +44,12 @@ class Config
 		return $defaultValue;
 	}
 	
+	/*
+	 * Sets $value for $key in the config cache.
+	 * 
+	 * @param string $key The key for the value.
+	 * @param mixed $value
+	 */
 	public static function set($key, $value) {
 		self::$_cachedConfig[$key] = $value;
 	}
