@@ -11,6 +11,12 @@ class WPAuthentication
 	const USER_ROLE_EDITOR = 'editor';
 	const USER_ROLE_ADMINISTRATOR = 'administrator';
 	
+	/*
+	 * Logs in as a user with the desired role.
+	 * 
+	 * @param Requests_Session $session The session to log in with.
+	 * @param string $userRole The desired role. This will look in the config for credentials under the key "user.role", prompting if necessary.
+	 */
 	public static function logInAsUserRole(\Requests_Session $session, $userRole) {
 		$credentials = \Wordfence\WPKit\Config::get("user.{$userRole}", null, false);
 		if ($credentials === null) {
@@ -23,6 +29,13 @@ class WPAuthentication
 		self::logInAsUser($session, $credentials['log'], $credentials['pwd']);
 	}
 	
+	/*
+	 * Logs in as the user for the given credentials.
+	 * 
+	 * @param Requests_Session @session The session to log in with.
+	 * @param string $username The username.
+	 * @param string $password The password.
+	 */
 	public static function logInAsUser(\Requests_Session $session, $username, $password) {
 		$loginPostData = [
 				'log' => $username,
