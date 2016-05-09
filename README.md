@@ -88,6 +88,10 @@ Use if the exploit succeeds.
 
 Use if some precondition for running the exploit fails (e.g., invalid login credentials).
 
+#### EXIT_CODE_VALID_REQUEST_FAILED
+
+Use if a test for a valid request fails.
+
 ---------------------------------------
 
 ### WPAuthentication
