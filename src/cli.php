@@ -2,6 +2,9 @@
 
 namespace Wordfence\WPKit;
 
+define('DS', DIRECTORY_SEPARATOR);
+define('CRLF', chr(13) . chr(10));
+
 class Cli
 {
 	protected static $_foregroundColors = array(
