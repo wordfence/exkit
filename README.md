@@ -72,6 +72,10 @@ The admin AJAX URL for the site. This defaults to the `baseURL` + `/wp-admin/adm
 
 Defines several exit codes to ensure PoCs use a common set of values.
 
+#### EXIT_CODE_INFORMATIONAL_ONLY
+
+Use if displaying some information only and not running the exploit (e.g., displaying the help message).
+
 #### EXIT_CODE_EXPLOIT_FAILED
 
 Use if the exploit fails.
