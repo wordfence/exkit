@@ -15,9 +15,9 @@ class WPNonce
 	 */
 	public static function findOnPage(\Requests_Session $session, $url, $regex = '/name="_wpnonce"\s+value="(.+?)"/')
 	{
-		$r = $session->get($url);
-		preg_match($regex, $r->body, $nonceMatches);
-		if (count($nonceMatches) < 2 || empty($nonceMatches[1])) {
+		//TODO: improve this to be more than just a dumb regex match
+		$nonceMatches = Page::find($session, $url, $regex);
+		if (!is_array($nonceMatches) || count($nonceMatches) < 2 || empty($nonceMatches[1])) {
 			return false;
 		}
 		return $nonceMatches[1];
