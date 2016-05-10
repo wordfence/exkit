@@ -34,10 +34,19 @@ class Endpoint
 	/*
 	 * Returns the admin-post.php URL endpoint, prompting if necessary.
 	 * 
-	 * @return string The admin AJAX URL.
+	 * @return string The admin post URL.
 	 */
 	public static function adminPostURL() {
 		return self::_specialURL('url.adminpost', '/wp-admin/admin-post.php', 'Admin Post URL');
+	}
+	
+	/*
+	 * Returns the uploads URL endpoint, prompting if necessary.
+	 * 
+	 * @return string The uploads URL.
+	 */
+	public static function uploadsURL() {
+		return self::_specialURL('url.uploads', '/wp-content/uploads', 'Uploads URL');
 	}
 	
 	/*
