@@ -28,7 +28,7 @@ class Endpoint
 	 * @return string The admin URL.
 	 */
 	public static function adminURL() {
-		return self::_specialURL('url.adminurl', '/wp-admin/admin.php', 'Admin URL');
+		return self::_specialURL('url.admin', '/wp-admin/admin.php', 'Admin URL');
 	}
 	
 	/*
