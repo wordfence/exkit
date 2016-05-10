@@ -23,6 +23,15 @@ class Endpoint
 	}
 	
 	/*
+	 * Returns the admin URL endpoint, prompting if necessary.
+	 * 
+	 * @return string The admin URL.
+	 */
+	public static function adminURL() {
+		return self::_specialURL('url.adminurl', '/wp-admin/admin.php', 'Admin URL');
+	}
+	
+	/*
 	 * Returns the admin AJAX URL endpoint, prompting if necessary.
 	 * 
 	 * @return string The admin AJAX URL.
