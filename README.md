@@ -62,9 +62,25 @@ The base URL to the site.
 
 The login URL for the site. This defaults to the `baseURL` + `/wp-login.php` if not yet known.
 
+#### adminURL
+
+The admin URL for the site. This defaults to the `baseURL` + `/wp-admin/admin.php` if not yet known.
+
 #### adminAjaxURL
 
 The admin AJAX URL for the site. This defaults to the `baseURL` + `/wp-admin/admin-ajax.php` if not yet known.
+
+#### adminPostURL
+
+The admin post URL for the site. This defaults to the `baseURL` + `/wp-admin/admin-post.php` if not yet known.
+
+#### uploadsURL
+
+The uploads URL for the site. This defaults to the `baseURL` + `/wp-content/uploads` if not yet known.
+
+#### url
+
+Checks the config for the given URL and prompts the user for it if needed.
 
 ---------------------------------------
 
@@ -94,6 +110,16 @@ Use if a test for a valid request fails.
 
 ---------------------------------------
 
+### Page
+
+Provides convenience functions to interface with a page.
+
+#### find
+
+Loads the given page and applies the regex to the response, returning any matches.
+
+---------------------------------------
+
 ### WPAuthentication
 
 Provides login capabilities. This may be for a specific user or for a user with the desired role.
@@ -105,3 +131,13 @@ Logs in as a user with the desired role (calls `logInAsUser`). If no user is fou
 #### logInAsUser
 
 Logs in as the user with the given credentials. If logging in fails, it will write out an error and exit with the code `EXIT_CODE_FAILED_PRECONDITION`.
+
+---------------------------------------
+
+### WPNonce
+
+Convience class for finding nonces.
+
+#### findOnPage
+
+Loads the given page and searches it for a nonce. Currently this is just done by applying a regex, but future versions may use a smarter approach.
