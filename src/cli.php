@@ -7,37 +7,52 @@ define('CRLF', chr(13) . chr(10));
 
 class Cli
 {
+	const COLOR_BLACK = 'black';
+	const COLOR_RED = 'red';
+	const COLOR_GREEN = 'green';
+	const COLOR_YELLOW = 'yellow';
+	const COLOR_BLUE = 'blue';
+	const COLOR_MAGENTA = 'magenta';
+	const COLOR_CYAN = 'cyan';
+	const COLOR_LIGHT_GRAY = 'light_gray';
+
 	protected static $_foregroundColors = array(
-		'black'			=> '0;30',
-		'dark_gray'		=> '1;30',
-		'blue'			=> '0;34',
-		'dark_blue'		=> '1;34',
-		'light_blue'	=> '1;34',
-		'green'			=> '0;32',
-		'light_green'	=> '1;32',
-		'cyan'			=> '0;36',
-		'light_cyan'	=> '1;36',
-		'red'			=> '0;31',
-		'light_red'		=> '1;31',
-		'purple'		=> '0;35',
-		'light_purple'	=> '1;35',
-		'light_yellow'	=> '0;33',
-		'yellow'		=> '1;33',
-		'light_gray'	=> '0;37',
-		'white'			=> '1;37',
+		self::COLOR_BLACK      => '0;30',
+		'dark_gray'            => '1;30',
+		self::COLOR_BLUE       => '0;34',
+		'dark_blue'            => '1;34',
+		'light_blue'           => '1;34',
+		self::COLOR_GREEN      => '0;32',
+		'light_green'          => '1;32',
+		self::COLOR_CYAN       => '0;36',
+		'light_cyan'           => '1;36',
+		self::COLOR_RED        => '0;31',
+		'light_red'            => '1;31',
+		'purple'               => '0;35',
+		'light_purple'         => '1;35',
+		'light_yellow'         => '0;33',
+		self::COLOR_YELLOW     => '1;33',
+		self::COLOR_LIGHT_GRAY => '0;37',
+		'white'                => '1;37',
 	);
-	
+
 	protected static $_backgroundColors = array(
-		'black'			=> '40',
-		'red'			=> '41',
-		'green'			=> '42',
-		'yellow'		=> '43',
-		'blue'			=> '44',
-		'magenta'		=> '45',
-		'cyan'			=> '46',
-		'light_gray'	=> '47',
+		self::COLOR_BLACK      => '40',
+		self::COLOR_RED        => '41',
+		self::COLOR_GREEN      => '42',
+		self::COLOR_YELLOW     => '43',
+		self::COLOR_BLUE       => '44',
+		self::COLOR_MAGENTA    => '45',
+		self::COLOR_CYAN       => '46',
+		self::COLOR_LIGHT_GRAY => '47',
 	);
-	
+
+	protected static $_successSymbol = '+';
+
+	protected static $_errorSymbol = '-';
+
+	protected static $_infoSymbol = '*';
+
 	public static function options()
 	{
 		static $args = null;
@@ -55,7 +70,7 @@ class Cli
 		}
 		return $args;
 	}
-	
+
 	/*
 	 * Prompts the user using $message and returns the value. On the first prompt it'll also display a message indicating how to provide an empty value.
 	 * 
@@ -69,13 +84,13 @@ class Cli
 			$firstPrompt = false;
 			echo "If you enter '.', the field will be left blank." . PHP_EOL;
 		}
-		
+
 		$prompt = $message;
 		if (!empty($defaultValue)) {
 			$prompt .= " [{$defaultValue}]";
 		}
 		$prompt .= ': ';
-		
+
 		$result = readline($prompt);
 		if ($result == '.') {
 			return '';
@@ -85,7 +100,7 @@ class Cli
 		}
 		return $result;
 	}
-	
+
 	/*
 	 * Writes $message to the console.
 	 * 
@@ -98,18 +113,18 @@ class Cli
 		if ($foregroundColor !== null) {
 			$string .= "\033[" . self::$_foregroundColors[$foregroundColor] . "m";
 		}
-		
+
 		if ($foregroundColor !== null && $backgroundColor !== null)
 		{
 			$string .= "\033[" . self::$_backgroundColors[$backgroundColor] . "m";
 		}
-		
+
 		$string .= $message;
-		
+
 		if ($foregroundColor !== null) {
 			$string .= "\033[0m";
 		}
-		
+
 		fwrite(STDOUT, $string . PHP_EOL);
 	}
 }
