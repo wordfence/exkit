@@ -127,4 +127,40 @@ class Cli
 
 		fwrite(STDOUT, $string . PHP_EOL);
 	}
+
+	/**
+	 * @param $message
+	 *
+	 * @see    Cli::write()
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since  0-dev
+	 */
+	public static function writeSuccess( $message ) {
+		self::write( '[' . self::$_successSymbol . '] ' . $message, self::COLOR_GREEN );
+	}
+
+	/**
+	 * @param $message
+	 *
+	 * @see    Cli::write()
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since  0-dev
+	 */
+	public static function writeError( $message ) {
+		self::write( '[' . self::$_successSymbol . '] ' . $message, self::COLOR_RED );
+	}
+
+	/**
+	 * @param $message
+	 *
+	 * @see    Cli::write()
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since  0-dev
+	 */
+	public static function writeInfo( $message ) {
+		self::write( '[' . self::$_successSymbol . '] ' . $message, self::COLOR_CYAN );
+	}
 }
