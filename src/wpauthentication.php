@@ -11,6 +11,9 @@ class WPAuthentication
 	const USER_ROLE_EDITOR = 'editor';
 	const USER_ROLE_ADMINISTRATOR = 'administrator';
 	
+	const USER_CREDENTIALS_USERNAME_KEY = 'log';
+	const USER_CREDENTIALS_PASSWORD_KEY = 'pwd';
+	
 	/*
 	 * Logs in as a user with the desired role.
 	 * 
@@ -18,15 +21,8 @@ class WPAuthentication
 	 * @param string $userRole The desired role. This will look in the config for credentials under the key "user.role", prompting if necessary.
 	 */
 	public static function logInAsUserRole(\Requests_Session $session, $userRole) {
-		$credentials = \Wordfence\WPKit\Config::get("user.{$userRole}", null, false);
-		if ($credentials === null) {
-			\Wordfence\WPKit\Cli::write("Please enter the username and password for a user with the \"{$userRole}\" role.");
-			$username = \Wordfence\WPKit\Cli::prompt("Username", '');
-			$password = \Wordfence\WPKit\Cli::prompt("Password", '');
-			$credentials = ['log' => $username, 'pwd' => $password];
-			\Wordfence\WPKit\Config::set("user.{$userRole}", $credentials);
-		}
-		self::logInAsUser($session, $credentials['log'], $credentials['pwd']);
+		$credentials = self::credentialsForUserWithRole($userRole);
+		self::logInAsUser($session, $credentials[self::USER_CREDENTIALS_USERNAME_KEY], $credentials[self::USER_CREDENTIALS_PASSWORD_KEY]);
 	}
 	
 	/*
@@ -50,5 +46,23 @@ class WPAuthentication
 			\Wordfence\WPKit\Cli::write('[-] Authentication failed', 'yellow', null);
 			exit(\Wordfence\WPKit\ExitCodes::EXIT_CODE_FAILED_PRECONDITION);
 		}
+	}
+	
+	/*
+	 * Returns the credentials for a user with the desired role.
+	 * 
+	 * @param string $userRole The desired role. This will look in the config for credentials under the key "user.role", prompting if necessary.
+	 * @return array An associative array with the credentials. USER_CREDENTIALS_USERNAME_KEY and USER_CREDENTIALS_PASSWORD_KEY will be the two keys.
+	 */
+	public static function credentialsForUserWithRole($userRole) {
+		$credentials = \Wordfence\WPKit\Config::get("user.{$userRole}", null, false);
+		if ($credentials === null) {
+			\Wordfence\WPKit\Cli::write("Please enter the username and password for a user with the \"{$userRole}\" role.");
+			$username = \Wordfence\WPKit\Cli::prompt("Username", '');
+			$password = \Wordfence\WPKit\Cli::prompt("Password", '');
+			$credentials = [self::USER_CREDENTIALS_USERNAME_KEY => $username, self::USER_CREDENTIALS_PASSWORD_KEY => $password];
+			\Wordfence\WPKit\Config::set("user.{$userRole}", $credentials);
+		}
+		return $credentials;
 	}
 }
