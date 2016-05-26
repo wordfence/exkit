@@ -23,6 +23,15 @@ class Endpoint
 	}
 	
 	/*
+	 * Returns the admin base URL endpoint, prompting if necessary.
+	 * 
+	 * @return string The admin base URL.
+	 */
+	public static function adminBaseURL() {
+		return self::_specialURL('url.adminbase', '/wp-admin', 'Admin Base URL');
+	}
+	
+	/*
 	 * Returns the admin URL endpoint, prompting if necessary.
 	 * 
 	 * @return string The admin URL.
