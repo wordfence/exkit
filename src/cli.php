@@ -53,6 +53,8 @@ class Cli
 
 	protected static $_infoSymbol = '*';
 
+	protected static $_warningSymbol = '!';
+
 	public static function options()
 	{
 		static $args = null;
@@ -149,7 +151,7 @@ class Cli
 	 * @since  0-dev
 	 */
 	public static function writeError( $message ) {
-		self::write( '[' . self::$_successSymbol . '] ' . $message, self::COLOR_RED );
+		self::write( '[' . self::$_errorSymbol . '] ' . $message, self::COLOR_RED );
 	}
 
 	/**
@@ -161,6 +163,18 @@ class Cli
 	 * @since  0-dev
 	 */
 	public static function writeInfo( $message ) {
-		self::write( '[' . self::$_successSymbol . '] ' . $message, self::COLOR_CYAN );
+		self::write( '[' . self::$_infoSymbol . '] ' . $message, self::COLOR_CYAN );
+	}
+
+	/**
+	 * @param $message
+	 *
+	 * @see    Cli::write()
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since  0-dev
+	 */
+	public static function writeWarning( $message ) {
+		self::write( '[' . self::$_warningSymbol . '] ' . $message, self::COLOR_YELLOW );
 	}
 }
