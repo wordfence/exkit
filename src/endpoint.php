@@ -68,6 +68,24 @@ class Endpoint
 	}
 	
 	/*
+	 * Returns the wp-content URL endpoint, prompting if necessary.
+	 * 
+	 * @return string The wp-content URL.
+	 */
+	public static function contentURL() {
+		return self::_specialURL('url.content', '/wp-content', 'Content URL');
+	}
+	
+	/*
+	 * Returns the plugins URL endpoint, prompting if necessary.
+	 * 
+	 * @return string The plugins URL.
+	 */
+	public static function pluginsURL() {
+		return self::_specialURL('url.plugins', '/wp-content/plugins', 'Plugins URL');
+	}
+	
+	/*
 	 * Convenience method to avoid duplicating code in the above.
 	 * 
 	 * @param string $key The config key.
