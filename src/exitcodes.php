@@ -26,7 +26,7 @@ class ExitCodes
 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since  0-dev
 	 */
-	public function exitWithFailed( $msg = '' ) {
+	public static function exitWithFailed( $msg = '' ) {
 		if ( $msg ) {
 			Cli::writeError( $msg );
 		}
@@ -39,7 +39,7 @@ class ExitCodes
 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since  0-dev
 	 */
-	public function exitWithSuccess( $msg = '' ) {
+	public static function exitWithSuccess( $msg = '' ) {
 		if ( $msg ) {
 			Cli::writeSuccess( $msg );
 		}
@@ -52,7 +52,7 @@ class ExitCodes
 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since  0-dev
 	 */
-	public function exitWithInformational( $msg = '' ) {
+	public static function exitWithInformational( $msg = '' ) {
 		if ( $msg ) {
 			Cli::writeInfo( $msg );
 		}
@@ -65,7 +65,7 @@ class ExitCodes
 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since  0-dev
 	 */
-	public function exitWithFailedPrecondition( $msg = '' ) {
+	public static function exitWithFailedPrecondition( $msg = '' ) {
 		if ( $msg ) {
 			Cli::writeError( $msg );
 		}
@@ -78,7 +78,7 @@ class ExitCodes
 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since  0-dev
 	 */
-	public function exitWithFailedRequest( $msg = '' ) {
+	public static function exitWithFailedRequest( $msg = '' ) {
 		if ( $msg ) {
 			Cli::writeError( $msg );
 		}
