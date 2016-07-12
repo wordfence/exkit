@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordfence\WPKit;
+namespace Wordfence\ExKit;
 
 class WPNonce
 {

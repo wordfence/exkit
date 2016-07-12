@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordfence\WPKit;
+namespace Wordfence\ExKit;
 
 define('DS', DIRECTORY_SEPARATOR);
 define('CRLF', chr(13) . chr(10));

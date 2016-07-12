@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordfence\WPKit;
+namespace Wordfence\ExKit;
 
 /**
  * An extension of {@link \Requests_Session} to provide some additional functionalities
@@ -8,7 +8,7 @@ namespace Wordfence\WPKit;
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @date      2016-07-08
  * @since     0-dev
- * @package   Wordfence\WPKit
+ * @package   Wordfence\ExKit
  */
 class Session extends \Requests_Session {
     /**
@@ -39,7 +39,7 @@ class Session extends \Requests_Session {
     }
 
     /**
-     * See {@link \Wordfence\WPKit\Request::upload()}
+     * See {@link \Wordfence\ExKit\Request::upload()}
      *
      * @param string $url
      * @param array  $data

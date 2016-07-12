@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordfence\WPKit;
+namespace Wordfence\ExKit;
 
 /*
  * Responsible for all configuration and value caching. For values that need to be customized for the
@@ -31,7 +31,7 @@ class Config
 	private static function _autoloadConfigurationFile() {
 		static $autoloaded = false;
 		if (!$autoloaded) {
-			$options = \Wordfence\WPKit\Cli::options();
+			$options = \Wordfence\ExKit\Cli::options();
 			if (isset($options['config'])) {
 				self::useConfigurationFile($options['config']);
 			}
@@ -55,7 +55,7 @@ class Config
 		}
 		
 		if ($shouldPrompt) {
-			$value = \Wordfence\WPKit\Cli::prompt($promptMessage === null ? $key : $promptMessage, $defaultValue);
+			$value = \Wordfence\ExKit\Cli::prompt($promptMessage === null ? $key : $promptMessage, $defaultValue);
 			self::set($key, $value);
 			return $value;
 		}

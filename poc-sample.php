@@ -3,8 +3,8 @@
 
 require __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-use Wordfence\WPKit\WPAuthentication;
-use Wordfence\WPKit\Cli;
+use Wordfence\ExKit\WPAuthentication;
+use Wordfence\ExKit\Cli;
 
 //Prompt for something
 $value = Cli::prompt("Enter a value", 'some default');

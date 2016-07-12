@@ -1,13 +1,18 @@
 {
-    "name": "wordfence/wpkit",
+    "name": "wordfence/exkit",
     "description": "",
-    "license": "TBD",
+    "license": "Apache",
     "keywords": [],
     "authors": [
         {
             "name": "Panagiotis Vagenas",
             "email": "pan.vagenas@gmail.com",
             "homepage": "https://gr.linkedin.com/in/panvagenas",
+            "role": "Developer"
+        },
+        {
+            "name": "Ryan Britton",
+            "homepage": "https://wordfence.com",
             "role": "Developer"
         }
     ],
@@ -23,7 +28,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Wordfence\\WPKit\\": "src/"
+            "Wordfence\\ExKit\\": "src/"
         },
         "files": []
     },

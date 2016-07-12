@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordfence\WPKit;
+namespace Wordfence\ExKit;
 
 class Endpoint
 {
@@ -95,12 +95,12 @@ class Endpoint
 	 * @return string The full URL.
 	 */
 	private static function _specialURL($key, $relativeValue, $prompt) {
-		$baseURL = \Wordfence\WPKit\Config::get('url.base', null, false);
+		$baseURL = \Wordfence\ExKit\Config::get('url.base', null, false);
 		$defaultURL = null;
 		if ($baseURL !== null) {
 			$defaultURL = trim($baseURL, '/') . $relativeValue;
 		}
-		return \Wordfence\WPKit\Config::get($key, $defaultURL, true, $prompt);
+		return \Wordfence\ExKit\Config::get($key, $defaultURL, true, $prompt);
 	}
 	
 	/*
@@ -118,11 +118,11 @@ class Endpoint
 		}
 		
 		$trimmedRelativeURL = trim($relativeURL, '/');
-		$baseURL = \Wordfence\WPKit\Config::get('url.base', null, false);
+		$baseURL = \Wordfence\ExKit\Config::get('url.base', null, false);
 		$defaultURL = null;
 		if ($baseURL !== null) {
 			$defaultURL = trim($baseURL, '/') . '/' . $trimmedRelativeURL;
 		}
-		return \Wordfence\WPKit\Config::get('url.' . $trimmedRelativeURL, $defaultURL, true, $prompt);
+		return \Wordfence\ExKit\Config::get('url.' . $trimmedRelativeURL, $defaultURL, true, $prompt);
 	}
 }

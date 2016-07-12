@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordfence\WPKit;
+namespace Wordfence\ExKit;
 
 
 class WPAuthentication
@@ -39,12 +39,12 @@ class WPAuthentication
 				'rememberme' => 'forever',
 				'wp-submit'  => 'Log+In',
 			];
-		$loginURL = \Wordfence\WPKit\Endpoint::loginURL();
+		$loginURL = \Wordfence\ExKit\Endpoint::loginURL();
 		
 		$r = $session->post($loginURL, [], $loginPostData);
 		if ($r->url == $loginURL) {
-			\Wordfence\WPKit\Cli::write('[-] Authentication failed', 'yellow', null);
-			exit(\Wordfence\WPKit\ExitCodes::EXIT_CODE_FAILED_PRECONDITION);
+			\Wordfence\ExKit\Cli::write('[-] Authentication failed', 'yellow', null);
+			exit(\Wordfence\ExKit\ExitCodes::EXIT_CODE_FAILED_PRECONDITION);
 		}
 	}
 	
@@ -55,13 +55,13 @@ class WPAuthentication
 	 * @return array An associative array with the credentials. USER_CREDENTIALS_USERNAME_KEY and USER_CREDENTIALS_PASSWORD_KEY will be the two keys.
 	 */
 	public static function credentialsForUserWithRole($userRole) {
-		$credentials = \Wordfence\WPKit\Config::get("user.{$userRole}", null, false);
+		$credentials = \Wordfence\ExKit\Config::get("user.{$userRole}", null, false);
 		if ($credentials === null) {
-			\Wordfence\WPKit\Cli::write("Please enter the username and password for a user with the \"{$userRole}\" role.");
-			$username = \Wordfence\WPKit\Cli::prompt("Username", '');
-			$password = \Wordfence\WPKit\Cli::prompt("Password", '');
+			\Wordfence\ExKit\Cli::write("Please enter the username and password for a user with the \"{$userRole}\" role.");
+			$username = \Wordfence\ExKit\Cli::prompt("Username", '');
+			$password = \Wordfence\ExKit\Cli::prompt("Password", '');
 			$credentials = [self::USER_CREDENTIALS_USERNAME_KEY => $username, self::USER_CREDENTIALS_PASSWORD_KEY => $password];
-			\Wordfence\WPKit\Config::set("user.{$userRole}", $credentials);
+			\Wordfence\ExKit\Config::set("user.{$userRole}", $credentials);
 		}
 		return $credentials;
 	}

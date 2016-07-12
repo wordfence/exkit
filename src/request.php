@@ -5,10 +5,10 @@
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @date      2016-07-08
  * @since     0-dev
- * @package   Wordfence\WPKit
+ * @package   Wordfence\ExKit
  */
 
-namespace Wordfence\WPKit;
+namespace Wordfence\ExKit;
 
 /**
  * Class Request
@@ -16,7 +16,7 @@ namespace Wordfence\WPKit;
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @date      2016-07-08
  * @since     0-dev
- * @package   Wordfence\WPKit
+ * @package   Wordfence\ExKit
  */
 class Request extends \Requests {
     /**
