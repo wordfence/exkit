@@ -7,7 +7,7 @@ class WPNonce
 	/**
 	 * Retrieves the given $url and returns the first match for the nonce regex or false if not found.
 	 * 
-	 * @param Requests_Session $session The session to send the request from.
+	 * @param \Requests_Session $session The session to send the request from.
 	 * @param string $url The page URL.
 	 * @param string $regex The regex to use to find the nonce. It must have a single capture group.
 	 * 
@@ -26,7 +26,7 @@ class WPNonce
 	/**
 	 * Retrieves the given $url and returns the all matches for the nonce regex or false if not found.
 	 *
-	 * @param Requests_Session $session The session to send the request from.
+	 * @param \Requests_Session $session The session to send the request from.
 	 * @param string $url The page URL.
 	 * @param string $regex The regex to use to find the nonce. It must have a single capture group.
 	 *
