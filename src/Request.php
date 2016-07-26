@@ -23,11 +23,9 @@ class Request extends \Requests {
      * Params are like {@link \Requests::post()} with the only dif that with this method we can use the $files
      * array to specify files to be used in the request.
      *
-     * TODO We need to verify that we can upload any file type with this method. I have only checked plain text files
-     *
      * @param string $url
      * @param array  $postData
-     * @param array  $files An array of files like `[string $fileName => string|resource $file]`
+     * @param array  $files An array of files like {@link Request::getUploadFormData()} $files param
      * @param array  $headers
      * @param array  $options
      *
@@ -41,7 +39,7 @@ class Request extends \Requests {
             return self::post( $url, $headers, $postData, $options );
         }
 
-        $formBoundary            = uniqid( '__FORM_BOUNDARY__' );
+        $formBoundary            = '__FORM_BOUNDARY__' . md5(uniqid());
         $headers['Content-Type'] = "multipart/form-data; boundary={$formBoundary}";
 
         $res = self::post( $url, $headers, self::getUploadFormData( $postData, $files, $formBoundary ), $options );
@@ -53,7 +51,19 @@ class Request extends \Requests {
      * Puts together the POST body when uploading files
      *
      * @param array  $postData
-     * @param array  $files
+     * @param array  $files An array of files like `[string $fileName => string|resource|array $file]`.
+     *                      In case $file is an array it provides additional control on file name and contents type.
+     *                      Available keys are `path`, `fileContents`, `fileName` and `contentType`. One of `path` or
+     *                      `fileContents` is required.
+     *                      If `path` is set then `fileName` and `contentType` are optional.
+     *                      If `fileContents` is set then `fileName` and `contentType` are required.
+     *
+     *                      examples:
+     *                      <ul>
+     *                      <li>['file1' => ['path' => '/tmp/file.php']]</li>
+     *                      <li>['file1' => ['path' => '/tmp/file.php'], 'file2' => ['path' => '/tmp/file2.png']]</li>
+     *                      <li>['file1' => ['fileContents' => '<?php echo 1;', 'fileName' => 'o.png', 'contentType' => 'image/png']]</li>
+     *                      </ul>
      * @param string $formBoundary
      *
      * @return string
@@ -65,28 +75,27 @@ class Request extends \Requests {
         $formBoundary = preg_replace( '/\W/', '', $formBoundary );
         $payload      = [ ];
 
-        foreach ( $postData as $name => $value ) {
+        foreach ( $postData as $paramName => $value ) {
             $payload[] = '--' . $formBoundary;
-            $payload[] = 'Content-Disposition: form-data; name="' . $name . '"';
+            $payload[] = 'Content-Disposition: form-data; name="' . $paramName . '"';
             $payload[] = '';
             $payload[] = $value;
         }
-        /** @var resource|string $file */
-        foreach ( $files as $name => $file ) {
-            if ( is_string( $file ) && file_exists( $file ) && is_readable( $file ) ) {
-                $file = fopen( $file, 'r' );
-            } elseif ( ! is_resource( $file ) || get_resource_type( $file ) != 'stream' ) {
-                Cli::writeError( 'Unsupported resource type for file uploading, skipping...' );
+
+        /** @var resource|string|array $file */
+        foreach ( $files as $paramName => $file ) {
+            $fileData = self::getFileData($file);
+
+            if(isset($fileData['error'])){
+                Cli::writeError( "Something went wrong with file {$paramName} (error: {$fileData['error']}), skipping..." );
                 continue;
             }
-            fseek( $file, 0 );
-            $metaData  = stream_get_meta_data( $file );
+
             $payload[] = '--' . $formBoundary;
-            $payload[] = 'Content-Disposition: form-data; name="' . $name . '"; filename="'
-                         . basename( $metaData["uri"] ) . '"';
-            $payload[] = 'Content-Type: text/plain';// . mime_content_type($metaData["uri"]);
+            $payload[] = 'Content-Disposition: form-data; name="' . $paramName . '"; filename="' . $fileData['fileName'] . '"';
+            $payload[] = "Content-Type: {$fileData['contentType']}";
             $payload[] = '';
-            $payload[] = stream_get_contents( $file );
+            $payload[] = $fileData['fileContents'];
             $payload[] = '';
         }
 
@@ -94,5 +103,70 @@ class Request extends \Requests {
         $payload[] = '';
 
         return implode( CRLF, $payload );
+    }
+
+    /**
+     * Returns the following info as an array
+     *
+     * * fileName
+     * * contentType
+     * * fileContents
+     *
+     * @param string|resource|array $file
+     *
+     * @return array ['fileName', 'contentType', 'fileContents']
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+     * @since  1.0.8
+     */
+    protected static function getFileData($file){
+        if(is_array($file)){
+            if(isset($file['path'])){
+                if(!(is_string( $file['path'] ) && file_exists( $file['path'] ) && is_readable( $file['path'] ))){
+                    return ['error' => 'unable to load file from path'];
+                }
+
+                $handler = fopen($file['path'], 'r');
+            } elseif (isset($file['fileContents'])){
+                if(!isset($file['contentType']) || !isset($file['fileName'])){
+                    return ['error' => '`contentType` and `fileName` must be set'];
+                }
+
+                $fileContents = $file['fileContents'];
+            }
+
+            if(isset($file['contentType'])){
+                $contentType = $file['contentType'];
+            }
+
+            if(isset($file['fileName'])){
+                $fileName = $file['fileName'];
+            }
+        }elseif (is_string($file)){
+            if(!(file_exists( $file ) && is_readable( $file ))){
+                return ['error' => 'unable to load file from path'];
+            }
+            $handler = fopen($file, 'r');
+        }elseif (is_resource($file)){
+            $handler = $file;
+        } else {
+            return ['error' => 'unsupported $file type'];
+        }
+
+        if(isset($handler)){
+            fseek( $handler, 0 );
+            $metaData = stream_get_meta_data( $handler );
+
+            if ( ! isset( $contentType ) ) {
+                $contentType = mime_content_type( $metaData["uri"] );
+            }
+            if ( ! isset( $fileName ) ) {
+                $fileName = basename( $metaData["uri"] );
+            }
+            if ( ! isset( $fileContents ) ) {
+                $fileContents = stream_get_contents( $handler );
+            }
+        }
+
+        return compact('fileName', 'contentType', 'fileContents');
     }
 }
